@@ -10,12 +10,21 @@ function fibonacci(n) {
 console.log('Fibonacci of 6 is: ' + fibonacci(6));
 
 //Fibonacci dynamic programming
-function fibonacciDP(n) {
-  let fib = [0, 1];
-  for (let i = 2; i <= n; i++) {
-    fib[i] = fib[i - 1] + fib[i - 2];
+function fibonacciMemo(n, memo) {
+  if (memo[n] !== undefined) {
+    return memo[n];
   }
-  return fib[n];
+  if (n <= 1) {
+    return n;
+  } else {
+    memo[n] = fibonacciMemo(n - 1, memo) + fibonacciMemo(n - 2, memo);
+    return memo[n];
+  }
 }
 
-console.log('Fibonacci with dynamic programming of 6 is: ' + fibonacciDP(6));
+function fibonacciDynamicProgramming(n) {
+  let memo = new Array(n + 1).fill(-1);
+  return fibonacciMemo(n, memo);
+}
+
+console.log('Fibonacci with dynamic programming of 6 is: ' + fibonacciDynamicProgramming(6));
